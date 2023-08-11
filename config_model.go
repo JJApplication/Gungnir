@@ -17,6 +17,7 @@ type ConfigModel struct {
 	Root       string            `json:"root"`
 	Host       string            `json:"host"`
 	Port       int               `json:"port"`
+	Pool       string            `json:"pool"`
 	DenyDirs   []string          `json:"deny_dirs"`   // 禁止访问的目录
 	DenyFiles  []string          `json:"deny_files"`  // 禁止访问的文件
 	DenyIPs    []string          `json:"deny_ips"`    // 禁止访问的IP
@@ -43,6 +44,7 @@ func newConfig() {
 		Root:       DefaultRoot,
 		Host:       DefaultHost,
 		Port:       DefaultPort,
+		Pool:       DefaultPool,
 		DenyDirs:   nil,
 		DenyFiles:  nil,
 		DenyIPs:    nil,
@@ -61,6 +63,7 @@ func (c *ConfigModel) Init() {
 	Root = c.mustSetString(c.Root, Root)
 	Host = c.mustSetString(c.Host, Host)
 	Port = c.mustSetInt(c.Port, Port)
+	Pool = c.mustSetString(c.Pool, DefaultPool)
 	DenyDirs = c.DenyDirs
 	DenyFiles = c.DenyFiles
 	DenyIPs = c.DenyIPs

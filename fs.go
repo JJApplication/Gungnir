@@ -142,7 +142,7 @@ func serveFile(w http.ResponseWriter, r *http.Request, fd *fileHandler, name str
 
 	// file preview mode?
 	if r.URL.Query().Get("mode") != "" {
-		serveFilePage(w, stat, d.Name())
+		serveFilePage(w, stat, name)
 		return
 	}
 
@@ -151,6 +151,7 @@ func serveFile(w http.ResponseWriter, r *http.Request, fd *fileHandler, name str
 		return
 	}
 
+	updatePool(name)
 	// serveContent will check modification time
 	http.ServeContent(w, r, d.Name(), d.ModTime(), f)
 }

@@ -13,6 +13,7 @@ func main() {
 	gungnir.InitLog()
 	gungnir.InitFlag()
 	gungnir.InitConfig()
+	gungnir.InitPool()
 	gungnir.Echo()
 	gungnir.Run(gungnir.Root)
 }

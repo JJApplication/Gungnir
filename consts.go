@@ -13,6 +13,7 @@ const (
 	DefaultHost   = "127.0.0.1"
 	DefaultPort   = 7086
 	DefaultConfig = "gungnir.json"
+	DefaultPool   = "counts.json"
 )
 
 var (

@@ -71,7 +71,7 @@ func serveFilePage(w http.ResponseWriter, stat fs.FileInfo, uri string) {
 		Size:     calcFileSize(stat.Size()),
 		ModTime:  getModTime(stat.ModTime()),
 		Ext:      getExt(stat.Name()),
-		Counts:   0,
+		Counts:   getPool(uri).Count,
 	}
 	serveTemplate(w, TemplateFile, data)
 }

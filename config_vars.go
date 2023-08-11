@@ -11,6 +11,7 @@ var (
 	Root       string
 	Host       string
 	Port       int
+	Pool       string
 	DenyDirs   []string          // 禁止访问的目录
 	DenyFiles  []string          // 禁止访问的文件
 	DenyIPs    []string          // 禁止访问的IP
