@@ -23,6 +23,7 @@ type ConfigModel struct {
 	DenyIPs    []string          `json:"deny_ips"`    // 禁止访问的IP
 	DenyAgents []string          `json:"deny_agents"` // 禁止访问的user-agent
 	Headers    map[string]string `json:"headers"`     // 自定义headers
+	SyncCount  int               `json:"sync_count"`  // 刷新计数的间隔s
 }
 
 func loadConfig() ConfigModel {
@@ -50,6 +51,7 @@ func newConfig() {
 		DenyIPs:    nil,
 		DenyAgents: nil,
 		Headers:    nil,
+		SyncCount:  DefaultSyncCount,
 	}, "", "  ")
 
 	if err := os.WriteFile(Config, data, 0644); err != nil {
@@ -69,6 +71,7 @@ func (c *ConfigModel) Init() {
 	DenyIPs = c.DenyIPs
 	DenyAgents = c.DenyAgents
 	Headers = c.Headers
+	SyncCount = c.mustSetInt(c.SyncCount, DefaultSyncCount)
 }
 
 func (c *ConfigModel) mustSetString(cf string, def string) string {

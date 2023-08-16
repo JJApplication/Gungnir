@@ -8,12 +8,13 @@
 package gungnir
 
 const (
-	APPName       = "Gungnir"
-	DefaultRoot   = "/"
-	DefaultHost   = "127.0.0.1"
-	DefaultPort   = 7086
-	DefaultConfig = "gungnir.json"
-	DefaultPool   = "counts.json"
+	APPName          = "Gungnir"
+	DefaultRoot      = "/"
+	DefaultHost      = "127.0.0.1"
+	DefaultPort      = 7086
+	DefaultConfig    = "gungnir.json"
+	DefaultPool      = "counts.json"
+	DefaultSyncCount = 60 * 60
 )
 
 var (

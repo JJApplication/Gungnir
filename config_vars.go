@@ -17,4 +17,5 @@ var (
 	DenyIPs    []string          // 禁止访问的IP
 	DenyAgents []string          // 禁止访问的user-agent
 	Headers    map[string]string // 自定义headers
+	SyncCount  int
 )

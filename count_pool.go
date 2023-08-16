@@ -88,7 +88,7 @@ func syncPool() {
 }
 
 func startSync() {
-	t := time.Tick(10 * time.Second)
+	t := time.Tick(time.Duration(SyncCount) * time.Second)
 	for range t {
 		log.Printf("start sync pool -> %s\n", Pool)
 		syncPool()
