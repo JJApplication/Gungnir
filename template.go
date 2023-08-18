@@ -15,7 +15,8 @@ import (
 )
 
 type DataModel struct {
-	DirList []Entry
+	EnableUpload bool
+	DirList      []Entry
 }
 
 type Entry struct {
@@ -26,13 +27,14 @@ type Entry struct {
 }
 
 type FileInfo struct {
-	FileName string
-	FileUrl  string
-	Size     string
-	ModTime  string
-	Ext      string
-	MD5      string
-	Counts   int
+	EnableUpload bool
+	FileName     string
+	FileUrl      string
+	Size         string
+	ModTime      string
+	Ext          string
+	MD5          string
+	Counts       int
 }
 
 const (
@@ -66,12 +68,13 @@ func serveIndex(w http.ResponseWriter, data DataModel) {
 
 func serveFilePage(w http.ResponseWriter, stat fs.FileInfo, uri string) {
 	data := FileInfo{
-		FileName: stat.Name(),
-		FileUrl:  uri,
-		Size:     calcFileSize(stat.Size()),
-		ModTime:  getModTime(stat.ModTime()),
-		Ext:      getExt(stat.Name()),
-		Counts:   getPool(uri).Count,
+		EnableUpload: EnableUpload,
+		FileName:     stat.Name(),
+		FileUrl:      uri,
+		Size:         calcFileSize(stat.Size()),
+		ModTime:      getModTime(stat.ModTime()),
+		Ext:          getExt(stat.Name()),
+		Counts:       getPool(uri).Count,
 	}
 	serveTemplate(w, TemplateFile, data)
 }

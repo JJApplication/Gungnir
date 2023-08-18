@@ -14,16 +14,18 @@ import (
 )
 
 type ConfigModel struct {
-	Root       string            `json:"root"`
-	Host       string            `json:"host"`
-	Port       int               `json:"port"`
-	Pool       string            `json:"pool"`
-	DenyDirs   []string          `json:"deny_dirs"`   // 禁止访问的目录
-	DenyFiles  []string          `json:"deny_files"`  // 禁止访问的文件
-	DenyIPs    []string          `json:"deny_ips"`    // 禁止访问的IP
-	DenyAgents []string          `json:"deny_agents"` // 禁止访问的user-agent
-	Headers    map[string]string `json:"headers"`     // 自定义headers
-	SyncCount  int               `json:"sync_count"`  // 刷新计数的间隔s
+	Root         string            `json:"root"`
+	Host         string            `json:"host"`
+	Port         int               `json:"port"`
+	Pool         string            `json:"pool"`
+	DenyDirs     []string          `json:"deny_dirs"`     // 禁止访问的目录
+	DenyFiles    []string          `json:"deny_files"`    // 禁止访问的文件
+	DenyIPs      []string          `json:"deny_ips"`      // 禁止访问的IP
+	DenyAgents   []string          `json:"deny_agents"`   // 禁止访问的user-agent
+	Headers      map[string]string `json:"headers"`       // 自定义headers
+	SyncCount    int               `json:"sync_count"`    // 刷新计数的间隔s
+	Token        string            `json:"token"`         // 上传认证的token
+	EnableUpload bool              `json:"enable_upload"` // 是否开启上传
 }
 
 func loadConfig() ConfigModel {
@@ -52,6 +54,7 @@ func newConfig() {
 		DenyAgents: nil,
 		Headers:    nil,
 		SyncCount:  DefaultSyncCount,
+		Token:      "",
 	}, "", "  ")
 
 	if err := os.WriteFile(Config, data, 0644); err != nil {
@@ -72,6 +75,8 @@ func (c *ConfigModel) Init() {
 	DenyAgents = c.DenyAgents
 	Headers = c.Headers
 	SyncCount = c.mustSetInt(c.SyncCount, DefaultSyncCount)
+	Token = c.Token
+	EnableUpload = c.EnableUpload
 }
 
 func (c *ConfigModel) mustSetString(cf string, def string) string {

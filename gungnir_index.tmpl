@@ -64,6 +64,10 @@
         <div class="head">
             <h1><a href="/">Gungnir</a></h1>
             <p>Fast File Server by <a href="https://github.com/JJApplication">JJApplication</a></p>
+            {{ if .EnableUpload }}
+            <input type="text" placeholder="token" id="token">
+            <input type="file" onchange="uploadFile(event)" id="file">
+            {{ end }}
         </div>
         <div class="list">
             {{ if eq (len .DirList) 0 }}
@@ -86,5 +90,40 @@
             </ul>
         </div>
     </div>
+<script type="text/javascript">
+    function uploadFile(e) {
+        const token = document.getElementById("token");
+        // auth first
+        fetch('/auth', {
+            method: 'POST',
+            body: JSON.stringify({token: token.value})
+        })
+            .then(res => {
+                if (res.status === 200) {
+                    console.log('upload file: ' + e.target.files[0].name)
+                    const form = new FormData();
+                    if (!e.target.files || e.target.files.length === 0) {
+                        alert('file list is empty');
+                        return
+                    }
+                    form.append('file', e.target.files[0]);
+                    fetch('/upload', {
+                        method: 'POST',
+                        mode: 'cors',
+                        body: form
+                    })
+                        .then(res => {
+                            if (res.status === 200) {
+                                alert('upload success');
+                            } else {
+                                alert('upload failed');
+                            }
+                        })
+                } else {
+                    alert('token auth failed');
+                }
+            })
+    }
+</script>
 </body>
 </html>
