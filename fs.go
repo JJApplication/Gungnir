@@ -207,7 +207,7 @@ func dirList(w http.ResponseWriter, f http.File, rootPath, dir string) {
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 
-	var data = DataModel{EnableUpload: EnableUpload}
+	var data = DataModel{EnableUpload: EnableUpload, Dir: dir}
 
 	for i, n := 0, dirs.len(); i < n; i++ {
 		name := dirs.name(i)

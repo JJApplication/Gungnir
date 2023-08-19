@@ -15,8 +15,9 @@ import (
 )
 
 type DataModel struct {
-	EnableUpload bool
-	DirList      []Entry
+	EnableUpload bool    // 开启上传
+	Dir          string  // 当前web根目录
+	DirList      []Entry // 当前目录列表
 }
 
 type Entry struct {

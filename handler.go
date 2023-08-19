@@ -97,7 +97,7 @@ func uploadFunc(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		fileName, _ := safe(header.Filename)
-		err = os.WriteFile(filepath.Join(Root, fileName), data, 0644)
+		err = os.WriteFile(filepath.Join(Root, getUploadPath(r), fileName), data, 0644)
 		if err != nil {
 			log.Printf("save file error: %s\n", err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
@@ -120,4 +120,24 @@ func safe(f string) (string, bool) {
 	}
 	f = strings.ReplaceAll(f, "/", "-")
 	return f, true
+}
+
+// 上传路径必须和refer中所包含的路径一致
+// 上传路径不能包含./ ../ ~
+func getUploadPath(r *http.Request) string {
+	uploadPath := r.FormValue("dir")
+	path := r.Referer()
+	if uploadPath == "" {
+		return uploadPath
+	}
+	if strings.Contains(uploadPath, "./") ||
+		strings.Contains(uploadPath, "../") ||
+		strings.Contains(uploadPath, "~") {
+		uploadPath = ""
+	}
+	if !strings.Contains(path, uploadPath) {
+		uploadPath = ""
+	}
+	log.Printf("upload path: ~%s\n", uploadPath)
+	return uploadPath
 }
