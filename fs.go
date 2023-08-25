@@ -223,7 +223,8 @@ func dirList(w http.ResponseWriter, f http.File, rootPath, dir string) {
 			filePath := getFilePath(rootPath, dir, name)
 			size, mod := getFileInfo(filePath)
 			data.add(Entry{
-				Name:    htmlReplacer.Replace(name),
+				//Name:    htmlReplacer.Replace(name),
+				Name:    name,
 				Size:    size,
 				ModTime: mod,
 				IsDir:   false,
