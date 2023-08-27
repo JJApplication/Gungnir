@@ -7,9 +7,12 @@
 
 package gungnir
 
+import "os"
+
 func InitConfig() {
 	if ConfigGen {
 		newConfig()
+		os.Exit(0)
 		return
 	}
 	cf := loadConfig()
